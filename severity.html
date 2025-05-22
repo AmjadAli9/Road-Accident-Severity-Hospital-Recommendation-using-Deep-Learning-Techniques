@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2b3f66">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AccidentCare">
+    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#2b3f66">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accident Severity Detection | AccidentCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <link rel="stylesheet" href="styles3.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">🚑 AccidentCare</a>
+    </nav>
+
+    <!-- Upload Section -->
+    <section class="upload-section">
+        <h2>🚨 Analyze Accident Severity</h2>
+        <p>Capture or upload media to assess injury severity in real time</p>
+        
+        <div class="upload-box">
+            <div class="upload-options">
+                <div class="option-row">
+                    <button class="btn camera-btn" onclick="openCamera()">
+                        📷 Open Camera
+                    </button>
+                    <label for="fileInput" class="btn upload-btn">
+                        📁 Upload File
+                    </label>
+                    <input type="file" id="fileInput" accept="image/*,video/*">
+                </div>
+                <div class="or-divider">OR</div>
+                <button class="btn" onclick="openSampleCases()">
+                    🧪 Try Sample Cases
+                </button>
+            </div>
+            
+            <div id="cameraContainer">
+                <video id="cameraPreview" autoplay playsinline></video>
+                <div class="camera-controls">
+                    <button class="btn switch-btn" onclick="switchCamera()">
+                        🔄 Switch Camera
+                    </button>
+                    <button class="btn flash-btn" onclick="toggleFlash()">
+                        ✨ Flash Off
+                    </button>
+                    <button class="btn capture-btn" onclick="capturePhoto()">
+                        📸 Capture
+                    </button>
+                    <button class="btn cancel-btn" onclick="closeCamera()">
+                        ✖ Cancel
+                    </button>
+                </div>
+            </div>
+            
+            <div id="cropperModal">
+                <div id="cropperContainer" style="width: 90%; max-width: 500px; height: 400px;"></div>
+                <div class="cropper-actions">
+                    <button class="btn" onclick="cropImage()">✓ Crop</button>
+                    <button class="btn cancel-btn" onclick="cancelCrop()">✖ Cancel</button>
+                </div>
+            </div>
+            
+            <div id="previewContainer"></div>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+                <div class="progress-text">Analyzing: 0%</div>
+            </div>
+            
+            <button id="analyzeBtn" class="btn analyze-btn" onclick="analyzeSeverity()" disabled>
+                🔍 Analyze Media
+            </button>
+        </div>
+
+        <div id="result">
+            <h3>Analysis Result:</h3>
+            <p id="severity"></p>
+            <p id="injuryType"></p>
+            <p id="treatmentSteps"></p>
+
+            <!-- Additional Action Buttons -->
+            <div class="option-row">
+                <button class="btn" onclick="openHospitalPage()">🏥 Find Hospital</button>
+                <button class="btn emergency" onclick="callEmergency()">🚑 Call Emergency</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 AccidentCare. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+  <script src="script3.js"></script>
+</body>
+</html>

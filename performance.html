@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- PWA Configuration -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#2b3f66">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AccidentCare">
+<link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+<meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+<meta name="msapplication-TileColor" content="#2b3f66">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <link rel="stylesheet" href="styles3.css">
+</head>
+<body>
+
+    <h1>Performance Analysis</h1>
+
+    <div class="container">
+        <h2>Algorithm Performance Comparison</h2>
+        <canvas id="performanceChart"></canvas>
+
+        <h2>Performance Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Algorithm</th>
+                    <th>Accuracy</th>
+                    <th>Precision</th>
+                    <th>Recall</th>
+                    <th>F1-Score</th>
+                </tr>
+            </thead>
+            <tbody id="performanceTable">
+                <!-- Data will be inserted dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script2.js"></script>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then(registration => {
+                console.log('ServiceWorker registration successful');
+                
+                // Check for updates
+                registration.addEventListener('updatefound', () => {
+                  const newWorker = registration.installing;
+                  newWorker.addEventListener('statechange', () => {
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                      console.log('New content available; please refresh.');
+                      // You could show a "Update Available" notification here
+                    }
+                  });
+                });
+              })
+              .catch(err => {
+                console.log('ServiceWorker registration failed: ', err);
+              });
+          });
+        }
+        
+        // Track PWA installation
+        window.addEventListener('appinstalled', (evt) => {
+          console.log('App was installed');
+        });
+        
+        // Track beforeinstallprompt for custom install button
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          console.log('PWA install prompt available');
+          // You could show your own install button here
+        });
+        </script>
+</body>
+</html>

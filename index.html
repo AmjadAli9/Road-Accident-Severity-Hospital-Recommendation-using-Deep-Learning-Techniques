@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Configuration -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccidentCare | Road Safety & Hospital Recommendation</title>
+    <meta name="description" content="AccidentCare is dedicated to providing AI-powered accident severity detection and real-time hospital recommendations for road accidents.">
+    
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2b3f66">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AccidentCare">
+    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#2b3f66">
+
+    <!-- Favicon & CSS -->
+    <link rel="icon" href="accident care.webp">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">🚑 AccidentCare</div>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h1>Redefining Road Safety</h1>
+            <p>Advanced AI-Powered Accident Analysis & Hospital Recommendations</p>
+            <a href="#services" class="btn">Explore Services</a>
+            <div class="motto">"Ensuring Fast, Effective, and Lifesaving Emergency Response"</div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>About AccidentCare</h2>
+        <p>Our mission is to save lives. AccidentCare harnesses the power of AI and real-time data to transform emergency response, from accident detection to smart hospital recommendations. Fast, accurate, and effective care when you need it most.</p>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="service-container">
+            <div class="service-card" onclick="location.href='severity.html'">
+                <h3>🚨 Accident Severity Detection</h3>
+                <p>Analyze accident images and videos with AI to assess injury severity in seconds.</p>
+            </div>
+            <div class="service-card" onclick="location.href='hospital.html'">
+                <h3>🏥 Hospital Recommendations</h3>
+                <p>Get real-time suggestions for the nearest and best hospitals based on the accident data.</p>
+            </div>
+            <div class="service-card" onclick="location.href='performance.html'">
+                <h3>📊 Performance Analytics</h3>
+                <p>Track system accuracy, response time, and performance metrics in real-time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+    </section>
+
+    <!-- QR Code Modal -->
+    <div id="qrModal" class="qr-modal">
+        <div class="qr-modal-content">
+            <span class="qr-close">&times;</span>
+            <h3>Scan to Install</h3>
+            <div id="qrCode"></div>
+            <p>Scan this QR code with your phone's camera to install AccidentCare</p>
+            <div class="qr-instructions">
+                <p><strong>After scanning:</strong></p>
+                <ol>
+                    <li>Open the link in your browser</li>
+                    <li>Look for the "Add to Home Screen" prompt</li>
+                    <li>Or tap the share icon and select "Install"</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 AccidentCare. All Rights Reserved.</p>
+        <div class="footer-links">
+            <a href="/privacy-policy">Privacy Policy</a> | 
+            <a href="/terms-of-service">Terms of Service</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script>
+        let deferredPrompt = null;
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+                .then(() => console.log('Service Worker registered'))
+                .catch(err => console.error('Service Worker registration failed:', err));
+        }
+
+        // Handle beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('Install prompt saved for later use.');
+        });
+
+        // Show install button after user interaction
+        document.addEventListener('DOMContentLoaded', () => {
+            const installBtn = document.createElement('button');
+            installBtn.textContent = '📲 Install AccidentCare';
+            installBtn.className = 'btn install-cta';
+            installBtn.style.position = 'fixed';
+            installBtn.style.bottom = '20px';
+            installBtn.style.right = '20px';
+            installBtn.style.zIndex = '9999';
+            installBtn.style.padding = '12px 20px';
+            installBtn.style.background = '#2b3f66';
+            installBtn.style.color = '#fff';
+            installBtn.style.border = 'none';
+            installBtn.style.borderRadius = '8px';
+            installBtn.style.boxShadow = '0 0 20px rgba(0,0,0,0.4)';
+            installBtn.style.cursor = 'pointer';
+
+            document.body.appendChild(installBtn);
+
+            installBtn.addEventListener('click', async () => {
+                installBtn.remove();
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`Install prompt result: ${outcome}`);
+                deferredPrompt = null;
+            });
+        });
+
+        // QR Code logic
+        function showQRInstall() {
+            const modal = document.getElementById('qrModal');
+            const qrCodeDiv = document.getElementById('qrCode');
+
+            const qr = qrcode(0, 'L');
+            qr.addData(window.location.href);
+            qr.make();
+            qrCodeDiv.innerHTML = qr.createImgTag(4);
+            modal.style.display = 'block';
+
+            document.querySelector('.qr-close').onclick = () => modal.style.display = 'none';
+            window.onclick = (event) => {
+                if (event.target === modal) modal.style.display = 'none';
+            };
+        }
+
+        // Add QR button for desktop users
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                const qrButton = document.createElement('button');
+                qrButton.className = 'btn';
+                qrButton.textContent = '📱 Get Mobile App';
+                qrButton.onclick = showQRInstall;
+                document.querySelector('footer').prepend(qrButton);
+            }
+        });
+
+        // App installed event
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA successfully installed');
+        });
+    </script>
+</body>
+</html>

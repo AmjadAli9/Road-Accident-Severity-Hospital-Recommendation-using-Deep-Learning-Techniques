@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- PWA Configuration -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#2b3f66">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AccidentCare">
+    <link rel="apple-touch-icon" href="/accident care.webp">
+    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+    <meta name="msapplication-TileColor" content="#2b3f66">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Recommendations | AccidentCare</title>
+    <link rel="stylesheet" href="styles2.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">🚑 AccidentCare</a>
+    </nav>
+
+    <!-- Hospital Finder Section -->
+    <section class="hospital-section">
+        <h2>🏥 Find Nearest Hospitals</h2>
+        <p>Instantly locate the best hospitals nearby for emergency care.</p>
+
+        <button class="btn" onclick="findHospital()">📍 Get Hospitals Near Me</button>
+        <button class="btn emergency" onclick="callEmergency()">📞 Call Emergency</button>
+
+        <div id="hospitalList"></div>
+        <div id="map"></div>
+    </section>
+
+    <footer>
+        <p>© 2025 AccidentCare. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
